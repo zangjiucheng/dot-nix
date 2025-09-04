@@ -1,0 +1,158 @@
+% assignmentstyle.sty — Package version of your AssignmentStyle class
+% -------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{assignmentstyle}[2024/09/08 v1.0 AssignmentStyle package]
+
+% Options
+\newif\ifas@geom
+\as@geomtrue
+\DeclareOption{nogeometry}{\as@geomfalse}
+\ProcessOptions\relax
+
+% Core packages
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{enumerate}
+\RequirePackage{nicefrac}
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+\RequirePackage{adjustbox}
+\RequirePackage[d]{esvect}
+\RequirePackage{comment}
+\RequirePackage{lastpage}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{tikz}
+\RequirePackage{enumitem}
+\RequirePackage{setspace}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage[dvipsnames]{xcolor}
+
+% Geometry (optional; disable with [nogeometry])
+\ifas@geom
+  \RequirePackage[left=2.6cm, right=2.6cm, top=1.25cm, includehead, includefoot]{geometry}
+\fi
+
+% Line spacing
+\setstretch{1.2}
+
+% --------------------
+% Sets
+% --------------------
+\newcommand{\C}{{\mathbb{C}}}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Q}{{\mathbb{Q}}}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\F}{{\mathbb{F}}}
+
+% --------------------
+% Calligraphic bases
+% --------------------
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mB}{\mathcal{B}}
+\newcommand{\mC}{\mathcal{C}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mL}{\mathcal{L}}
+\newcommand{\Lap}{\mathcal{L}}
+\newcommand{\mM}{\mathcal{M}}
+\newcommand{\mO}{\mathcal{O}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mT}{\mathcal{T}}
+
+% --------------------
+% Linear algebra
+% --------------------
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\spn}{\operatorname{Span}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\prp}{\operatorname{perp}}
+\newcommand{\refl}{\operatorname{refl}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\nul}{\operatorname{Null}}
+\newcommand{\nully}{\operatorname{nullity}}
+\newcommand{\range}{\operatorname{Range}}
+\renewcommand{\ker}{\operatorname{Ker}}
+\newcommand{\col}{\operatorname{Col}}
+\newcommand{\row}{\operatorname{Row}}
+\newcommand{\cof}{\operatorname{cof}}
+\newcommand{\Num}{\operatorname{Num}}
+\newcommand{\Id}{\operatorname{Id}}
+\newcommand{\ipb}{\langle \thinspace, \rangle}
+\newcommand{\ip}[2]{\left\langle #1, #2\right\rangle}
+\newcommand{\M}[2]{M_{#1\times #2}(\F)}
+\newcommand{\RREF}{\operatorname{RREF}}
+\newcommand{\cv}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newenvironment{amatrix}[1]{\left[\begin{array}{@{}*{\numexpr#1-1}{c}|c@{}}}{\end{array}\right]}
+\newcommand{\am}[2]{\begin{amatrix}{#1} #2 \end{amatrix}}
+\newcommand{\conjclass}[1]{\text{Conj}_{#1}}
+\newcommand{\sylow}{\text{Sylow}}
+\newcommand{\normalsubgroup}{\trianglelefteq}
+
+% --------------------
+% Vectors via esvect
+% --------------------
+\newcommand{\vzero}{\vv{0}}
+\newcommand{\va}{\vv{a}}
+\newcommand{\vb}{\vv{b}}
+\newcommand{\vc}{\vv{c}}
+\newcommand{\vd}{\vv{d}}
+\newcommand{\ve}{\vv{e}}
+\newcommand{\vf}{\vv{f}}
+\newcommand{\vg}{\vv{g}}
+\newcommand{\vh}{\vv{h}}
+\newcommand{\vl}{\vv{\ell}}
+\newcommand{\vm}{\vv{m}}
+\newcommand{\vn}{\vv{n}}
+\newcommand{\vp}{\vv{p}}
+\newcommand{\vq}{\vv{q}}
+\newcommand{\vr}{\vv{r}}
+\newcommand{\vs}{\vv{s}}
+\newcommand{\vt}{\vv{t}}
+\newcommand{\vu}{\vv{u}}
+\newcommand{\vvv}{{\vv{v}}}
+\newcommand{\vw}{\vv{w}}
+\newcommand{\vx}{\vv{x}}
+\newcommand{\vy}{\vv{y}}
+\newcommand{\vz}{\vv{z}}
+
+% --------------------
+% Display helpers
+% --------------------
+\newcommand{\ds}{\displaystyle}
+\newcommand{\qand}{\quad\text{and}}
+\newcommand{\qandq}{\quad\text{and}\quad}
+\newcommand{\hint}{\textbf{Hint: }}
+
+% --------------------
+% Misc
+% --------------------
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\rc}{\red{\checkmark}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\acton}{\curvearrowright}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+        \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+% --------------------
+% Simple theorem-like labels
+% --------------------
+\newcommand{\conclusion}{\vspace{1em}\noindent\textbf{Conclusion:}\ }
+\newcommand{\prop}{\vspace{1em}\noindent\textbf{Proposition:}\ }
+\newcommand{\pf}[1]{\noindent\textbf{Proof:}\ #1 \hfill$\qed$}
+\newcommand{\note}[1]{\vspace{1em}\noindent\textbf{Note:}\ #1}
+\newcommand{\lema}[1]{\vspace{1em}\noindent\textbf{Lemma:}\ #1}
+\newcommand{\refe}[1]{\vspace{1em}
+    \begin{tcolorbox}[
+            colback=gray!10,
+            colframe=gray!50,
+            title=Reference,
+            boxrule=0.5mm, 
+            arc=3mm,
+            fonttitle=\bfseries
+        ]\noindent #1
+    \end{tcolorbox}}

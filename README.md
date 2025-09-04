@@ -1,15 +1,20 @@
 # UW NoteStyle
 
-My note style for University of Waterloo (3A term, v2). Modular LaTeX components.
+My LaTeX styles for University of Waterloo (3A term, v2). Two different style systems available.
 
 ## Usage
 
-**Load everything:**
+**Assignment style (single package):**
 ```latex
-\usepackage{notestyle-all}      % or [nolayout] to skip geometry
+\usepackage{assignmentstyle}    % or [nogeometry] to skip geometry
 ```
 
-**Pick components:**
+**Note style (modular system):**
+```latex
+\usepackage{notestyle-all}      % load all modules, or [nolayout] to skip geometry
+```
+
+**Pick note style components:**
 ```latex
 \usepackage{notestyle-base}     % required first
 \usepackage{notestyle-boxes}    % theorems, proofs, definitions

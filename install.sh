@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# install.sh — Install notestyle .sty files into your local texmf tree
+# install.sh — Install LaTeX style files into your local texmf tree
 # Works on macOS (MacTeX) and Linux (TeX Live/MiKTeX).
 # Usage:
 #   bash install.sh                 # install *.sty in current dir (or notestyle-modular.zip if present)
 #   bash install.sh --prefix DIR    # install into DIR instead of auto TEXMFHOME
 #   bash install.sh --uninstall     # remove installed notestyle directory
+#   bash install.sh --update        # refresh installation with new changes
 #   bash install.sh --dry-run       # show what would happen
 #   bash install.sh --help
 #
@@ -12,12 +13,14 @@
 # - Default install target:
 #     macOS (MacTeX):  ~/Library/texmf/tex/latex/notestyle/
 #     Linux (TeX Live): ~/texmf/tex/latex/notestyle/
+# - Installs both assignmentstyle.sty and notestyle-*.sty (two different style systems)
 # - The script prefers notestyle-modular.zip if found, otherwise copies all *.sty in the current directory.
 
 set -euo pipefail
 
 DRYRUN=0
 UNINSTALL=0
+UPDATE=0
 PREFIX=""
 PKGDIR="notestyle"
 SRC_ZIP="notestyle-modular.zip"
@@ -31,6 +34,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) DRYRUN=1; shift ;;
     --uninstall) UNINSTALL=1; shift ;;
+    --update) UPDATE=1; shift ;;
     --prefix) PREFIX="${2:-}"; [[ -z "${PREFIX}" ]] && die "--prefix needs a directory"; shift 2 ;;
     --help|-h) grep '^# ' "$0" | sed 's/^# //'; exit 0 ;;
     *) die "Unknown argument: $1" ;;
@@ -61,6 +65,28 @@ if [[ "$UNINSTALL" -eq 1 ]]; then
     run "rm -rf \"$TARGET\""
   else
     warn "Nothing to remove at $TARGET"
+  fi
+elif [[ "$UPDATE" -eq 1 ]]; then
+  if [[ -d "$TARGET" ]]; then
+    log "Updating existing installation at $TARGET"
+    run "mkdir -p \"$TARGET\""
+    
+    if [[ -f "$SRC_ZIP" ]]; then
+      log "Found $SRC_ZIP — extracting into $TARGET"
+      if [[ "$DRYRUN" -eq 1 ]]; then
+        echo "DRYRUN: unzip -o \"$SRC_ZIP\" -d \"$TARGET\""
+      else
+        unzip -o "$SRC_ZIP" -d "$TARGET" >/dev/null
+      fi
+    else
+      count=$(ls *.sty 2>/dev/null | wc -l | tr -d ' ')
+      [[ "$count" -gt 0 ]] || die "No .sty files here and $SRC_ZIP not present."
+      log "Copying $(ls *.sty | wc -w) .sty file(s) to $TARGET"
+      run "cp -f *.sty \"$TARGET/\""
+    fi
+  else
+    log "No existing installation found at $TARGET. Use regular install instead."
+    exit 1
   fi
 else
   log "Installing to: $TARGET"
@@ -102,7 +128,10 @@ refresh_user_db
 
 if [[ "$UNINSTALL" -eq 1 ]]; then
   log "Uninstall complete."
+elif [[ "$UPDATE" -eq 1 ]]; then
+  log "Update complete. Try using: \\usepackage{notestyle-all} or \\usepackage{assignmentstyle}"
+  log "Updated at: $TARGET"
 else
-  log "Install complete. Try using: \\usepackage{notestyle-all}"
+  log "Install complete. Try using: \\usepackage{notestyle-all} or \\usepackage{assignmentstyle}"
   log "Installed at: $TARGET"
 fi
