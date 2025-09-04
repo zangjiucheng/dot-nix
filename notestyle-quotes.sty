@@ -1,0 +1,27 @@
+% notestyle-quotes.sty — framed quotes & logic equivalence
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-quotes}[2024/09/03 v1.0 Quotes]
+\RequirePackage{framed}
+\RequirePackage{changepage}
+\RequirePackage{xcolor}
+
+\newenvironment{fquote}{%
+  \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{darkblue}\vrule width 2pt}%
+    {\color{formalshade}\vrule width 4pt}%
+    \colorbox{formalshade}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}%
+  \begin{adjustwidth}{}{7pt}%
+  \vspace{2pt}%
+}{%
+  \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+}
+
+\def\logequiv{%
+  \mathrel{%
+    \rule{.3pt}{1.3ex}\mkern-1mu=\mkern-8mu=\mkern-2mu\rule{.3pt}{1.3ex}%
+  }%
+}

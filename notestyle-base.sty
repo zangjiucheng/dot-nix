@@ -1,0 +1,38 @@
+% notestyle-base.sty — shared requirements & helpers
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-base}[2024/09/03 v1.0 Base of NoteStyle]
+
+% Core deps
+\RequirePackage{amsfonts,amsmath,amssymb,amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{enumitem}
+\RequirePackage{framed}
+\RequirePackage{changepage}
+\RequirePackage{subcaption}
+\RequirePackage{setspace}
+\RequirePackage{dsfont}
+\RequirePackage[ruled,vlined]{algorithm2e}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\RequirePackage{cancel}
+\RequirePackage{tikz-cd}
+\RequirePackage{hyperref}
+\RequirePackage{tikz}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{calrsfs}
+
+% Optional dutchcal (fallback to \mathcal)
+\IfFileExists{dutchcal.sty}{\RequirePackage{dutchcal}}{}
+\providecommand{\mathdutchcal}{\mathcal}
+
+% Common colors
+\definecolor{formalshade}{rgb}{0.95,0.95,1}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+
+% Line spacing default
+\setstretch{1.2}
+
+% Graphics path (safe even if folder absent)
+\graphicspath{{./Images/}}

@@ -1,0 +1,19 @@
+% notestyle-tikz.sty — TikZ helpers
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-tikz}[2024/09/03 v1.0 TikZ helpers]
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,shapes,fit,arrows,shapes.geometric}
+
+% circled macro
+\newcommand{\circled}[1]{%
+  \tikz[baseline=(char.base)]{%
+    \node[shape=circle,draw,inner sep=2pt] (char) {#1};%
+  }%
+}
+
+% amatrix environment
+\newenvironment{amatrix}[1]{%
+  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right]
+}

@@ -1,0 +1,20 @@
+% notestyle-all.sty — convenience aggregator
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-all}[2024/09/03 v1.0 Load all NoteStyle modules]
+
+% Options:
+%   nolayout — do not apply notestyle-layout
+\newif\ifns@layout
+\ns@layouttrue
+\DeclareOption{nolayout}{\ns@layoutfalse}
+\ProcessOptions\relax
+
+\RequirePackage{notestyle-base}
+\ifns@layout\RequirePackage{notestyle-layout}\fi
+\RequirePackage{notestyle-sections}
+\RequirePackage{notestyle-boxes}
+\RequirePackage{notestyle-code}
+\RequirePackage{notestyle-quotes}
+\RequirePackage{notestyle-tikz}
+\RequirePackage{notestyle-colors}
+\RequirePackage{notestyle-math}

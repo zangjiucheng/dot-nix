@@ -1,0 +1,55 @@
+% notestyle-boxes.sty — tcolorbox theorem-like blocks
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-boxes}[2024/09/03 v1.0 Boxes]
+\RequirePackage[most]{tcolorbox}
+
+\newcommand{\thm}[2]{%
+  \begin{tcolorbox}[colback=blue!5, colframe=blue!70, title={Theorem #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #2
+  \end{tcolorbox}%
+}
+\newcommand{\prop}[1]{%
+  \begin{tcolorbox}[colback=magenta!10, colframe=magenta!80, title={Proposition}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #1
+  \end{tcolorbox}%
+}
+\newcommand{\eg}[1]{%
+  \begin{tcolorbox}[colback=yellow!10, colframe=orange!80, title={Example}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    \small #1
+  \end{tcolorbox}%
+}
+\newcommand{\lema}[2]{%
+  \begin{tcolorbox}[colback=red!5, colframe=red!70, title={Lemma #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #2
+  \end{tcolorbox}%
+}
+\newcommand{\pf}[1]{%
+  \begin{tcolorbox}[breakable, enhanced, colback=blue!5, colframe=blue!70, title={Proof}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm, left=3mm, right=3mm]
+    #1\par\medskip\hfill$\qed$
+  \end{tcolorbox}%
+}
+\newcommand{\defn}[1]{%
+  \begin{tcolorbox}[colback=purple!5, colframe=purple!70, title={Definition}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm, left=3mm, right=3mm]
+    #1
+  \end{tcolorbox}%
+}
+\newcommand{\note}[1]{%
+  \begin{tcolorbox}[colback=cyan!10, colframe=cyan!80, title={Note}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #1
+  \end{tcolorbox}%
+}
+\newcommand{\cor}[2]{%
+  \begin{tcolorbox}[colback=teal!10, colframe=teal!80, title={Corollary #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #2
+  \end{tcolorbox}%
+}
+\newcommand{\recall}[1]{%
+  \begin{tcolorbox}[colback=yellow!20, colframe=yellow!80!black, title={Recall}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #1
+  \end{tcolorbox}%
+}
+\newcommand{\remark}[1]{%
+  \begin{tcolorbox}[colback=green!5, colframe=green!60!black, title={Remark}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
+    #1
+  \end{tcolorbox}%
+}

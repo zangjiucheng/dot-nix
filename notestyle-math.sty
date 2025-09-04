@@ -1,0 +1,52 @@
+% notestyle-math.sty — math shorthands & sets
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notestyle-math}[2024/09/03 v1.0 Math macros]
+
+% Sequences/limits
+\newcommand{\seq}[1]{$\{#1\}$}
+\newcommand{\limxa}{$\lim_{x \to a}$}
+\newcommand{\ninf}{$\lim_{n \to \infty}$}
+
+% mathcal variants
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\newcommand{\Lb}{\pazocal{L}}
+\newcommand{\curly}[1]{\ensuremath\mathdutchcal{#1}}
+\newcommand{\tabin}{\hangindent 2em \hangafter=0}
+
+% Calculus & linear algebra
+\newcommand{\deriv}[2]{\frac{d#1}{d#2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\frac{d^2 #1}{d #2^2}}
+\newcommand{\diff}{\,\mathrm{d}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\vecsym}[1]{\mathbf{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% Number sets & probability
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\mP}{\mathbb{P}}
+\newcommand{\Lap}{\mathcal{L}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% Group theory
+\newcommand{\acton}{\curvearrowright}
+\newcommand{\normalsubgroup}{\trianglelefteq}
+\newcommand{\subgroup}{\leq}
+\newcommand{\conjclass}[1]{\text{Conj}_{#1}}
+\newcommand{\sylow}{\text{Sylow}}
+\newcommand{\orb}{\mathcal{O}}
+
+% Misc
+\newcommand{\RomanNumeralCaps}[1]{\MakeUppercase{\romannumeral #1}}
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+\newcommand{\contradiction}{\ensuremath{\lightning}}
