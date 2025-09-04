@@ -1,55 +1,91 @@
-% notestyle-boxes.sty — tcolorbox theorem-like blocks
+% notestyle-boxes.sty — accent-colour-matched boxes for notes & math
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{notestyle-boxes}[2024/09/03 v1.0 Boxes]
+\ProvidesPackage{notestyle-boxes}[2025/09/03 v4.0 Accent-colour-matched boxes]
 \RequirePackage[most]{tcolorbox}
+\RequirePackage{xcolor}
 
-\newcommand{\thm}[2]{%
-  \begin{tcolorbox}[colback=blue!5, colframe=blue!70, title={Theorem #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #2
-  \end{tcolorbox}%
+% --- Accent palettes (dark + light background) ---
+\definecolor{thmline}{RGB}{25,70,145}    % dark blue
+\definecolor{thmback}{RGB}{230,240,255}  % pale blue
+
+\definecolor{propline}{RGB}{145,30,110}  % dark magenta
+\definecolor{propback}{RGB}{245,230,245} % pale magenta
+
+\definecolor{egline}{RGB}{200,120,0}     % dark orange
+\definecolor{egback}{RGB}{255,245,225}   % pale orange
+
+\definecolor{lemaline}{RGB}{160,20,20}   % dark red
+\definecolor{lemaback}{RGB}{250,235,235} % pale red
+
+\definecolor{pfnline}{RGB}{0,90,160}     % dark proof blue
+\definecolor{pfback}{RGB}{235,245,255}   % pale proof blue
+
+\definecolor{defline}{RGB}{90,40,130}    % dark purple
+\definecolor{defback}{RGB}{240,230,250}  % pale purple
+
+\definecolor{noteline}{RGB}{0,130,140}   % dark teal
+\definecolor{noteback}{RGB}{225,245,245} % pale teal
+
+\definecolor{recline}{RGB}{160,130,0}    % dark yellow
+\definecolor{recback}{RGB}{255,250,220}  % pale yellow
+
+\definecolor{remln}{RGB}{20,100,20}      % dark green
+\definecolor{remback}{RGB}{230,245,230}  % pale green
+
+\definecolor{formline}{RGB}{90,30,160}    % dark violet
+\definecolor{formback}{RGB}{240,230,255}  % pale violet
+
+\definecolor{tipline}{RGB}{0,120,80}      % dark teal-green
+\definecolor{tipback}{RGB}{225,245,235}   % pale teal-green
+
+\definecolor{warnline}{RGB}{200,40,0}     % dark red-orange
+\definecolor{warnback}{RGB}{255,235,225}  % pale red-orange
+
+\definecolor{trickline}{RGB}{160,120,0}   % dark golden
+\definecolor{trickback}{RGB}{255,250,225} % pale golden
+
+% --- Base style ---
+\tcbset{
+  nsbase/.style={
+    enhanced, breakable,
+    frame hidden,
+    boxsep=1ex,
+    left=1.25ex, right=1.25ex, top=0.8ex, bottom=0.8ex,
+    sharp corners, arc=0.6mm,
+    before skip=8pt, after skip=10pt,
+    fonttitle=\bfseries,
+    coltitle=black,
+  },
 }
-\newcommand{\prop}[1]{%
-  \begin{tcolorbox}[colback=magenta!10, colframe=magenta!80, title={Proposition}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #1
-  \end{tcolorbox}%
-}
-\newcommand{\eg}[1]{%
-  \begin{tcolorbox}[colback=yellow!10, colframe=orange!80, title={Example}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    \small #1
-  \end{tcolorbox}%
-}
-\newcommand{\lema}[2]{%
-  \begin{tcolorbox}[colback=red!5, colframe=red!70, title={Lemma #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #2
-  \end{tcolorbox}%
-}
-\newcommand{\pf}[1]{%
-  \begin{tcolorbox}[breakable, enhanced, colback=blue!5, colframe=blue!70, title={Proof}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm, left=3mm, right=3mm]
-    #1\par\medskip\hfill$\qed$
-  \end{tcolorbox}%
-}
-\newcommand{\defn}[1]{%
-  \begin{tcolorbox}[colback=purple!5, colframe=purple!70, title={Definition}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm, left=3mm, right=3mm]
-    #1
-  \end{tcolorbox}%
-}
-\newcommand{\note}[1]{%
-  \begin{tcolorbox}[colback=cyan!10, colframe=cyan!80, title={Note}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #1
-  \end{tcolorbox}%
-}
-\newcommand{\cor}[2]{%
-  \begin{tcolorbox}[colback=teal!10, colframe=teal!80, title={Corollary #1}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #2
-  \end{tcolorbox}%
-}
-\newcommand{\recall}[1]{%
-  \begin{tcolorbox}[colback=yellow!20, colframe=yellow!80!black, title={Recall}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #1
-  \end{tcolorbox}%
-}
-\newcommand{\remark}[1]{%
-  \begin{tcolorbox}[colback=green!5, colframe=green!60!black, title={Remark}, fonttitle=\bfseries, boxrule=0.5mm, arc=4mm]
-    #1
-  \end{tcolorbox}%
-}
+
+% --- Main environments ---
+\newtcolorbox{thmbox}[1]{nsbase, colback=thmback, borderline west={3.5pt}{0pt}{thmline}, title={Theorem~#1}}
+\newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
+\newtcolorbox{egbox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Example}}
+\newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
+\newtcolorbox{pfbox}{nsbase, colback=pfback, borderline west={3.5pt}{0pt}{pfnline}, title={Proof}}
+\newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
+\newtcolorbox{notebox}{nsbase, colback=noteback, borderline west={3.5pt}{0pt}{noteline}, title={Note}}
+\newtcolorbox{corbox}[1]{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Corollary~#1}}
+\newtcolorbox{recbox}{nsbase, colback=recback, borderline west={3.5pt}{0pt}{recline}, title={Recall}}
+\newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
+\newtcolorbox{formulabox}{nsbase, colback=formback, borderline west={3.5pt}{0pt}{formline}, title={Formula}}
+\newtcolorbox{tipbox}{nsbase, colback=tipback, borderline west={3.5pt}{0pt}{tipline}, title={Tip}}
+\newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
+\newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
+
+% --- Shortcuts ---
+\newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
+\newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
+\newcommand{\eg}[1]{\begin{egbox}#1\end{egbox}}
+\newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
+\newcommand{\pf}[1]{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
+\newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
+\newcommand{\note}[1]{\begin{notebox}#1\end{notebox}}
+\newcommand{\cor}[2]{\begin{corbox}{#1}#2\end{corbox}}
+\newcommand{\recall}[1]{\begin{recbox}#1\end{recbox}}
+\newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
+\newcommand{\formula}[1]{\begin{formulabox}#1\end{formulabox}}
+\newcommand{\tip}[1]{\begin{tipbox}#1\end{tipbox}}
+\newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
+\newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
