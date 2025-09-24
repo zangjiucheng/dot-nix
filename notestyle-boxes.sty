@@ -44,6 +44,9 @@
 \definecolor{trickline}{RGB}{160,120,0}   % dark golden
 \definecolor{trickback}{RGB}{255,250,225} % pale golden
 
+\definecolor{goldenline}{RGB}{218,165,32}   % goldenrod
+\definecolor{goldenback}{RGB}{255,248,220}  % cornsilk
+
 % --- Base style ---
 \tcbset{
   nsbase/.style={
@@ -59,7 +62,7 @@
 }
 
 % --- Main environments ---
-\newtcolorbox{thmbox}[1]{nsbase, colback=thmback, borderline west={3.5pt}{0pt}{thmline}, title={Theorem~#1}}
+\newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
 \newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
 \newtcolorbox{egbox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Example}}
 \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
