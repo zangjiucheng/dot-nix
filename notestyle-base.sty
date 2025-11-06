@@ -26,6 +26,7 @@
 \RequirePackage{subfiles}
 \RequirePackage{multicol}
 \RequirePackage{centernot}
+\RequirePackage[titles]{tocloft}
 
 % Optional dutchcal (fallback to \mathcal)
 \IfFileExists{dutchcal.sty}{\RequirePackage{dutchcal}}{}
@@ -34,6 +35,51 @@
 % Common colors
 \definecolor{formalshade}{rgb}{0.95,0.95,1}
 \definecolor{darkblue}{rgb}{0,0,0.5}
+
+% Table of contents compaction
+\setlength{\cftparskip}{0pt}
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+\setlength{\cftbeforesubsubsecskip}{0pt}
+
+% Set vertical space between paragraphs
+\setlength{\parskip}{0.5\baselineskip}
+
+% Bullet-proof: override how tocloft builds the TOC title
+\makeatletter
+\renewcommand{\tableofcontents}{%
+  \newpage
+  % Keep PDF bookmark if hyperref is loaded
+  \ifdefined\phantomsection\phantomsection\fi
+  \@ifundefined{pdfbookmark}{}{%
+    \pdfbookmark[1]{\contentsname}{toc}%
+  }%
+  % Add space on top
+  \vspace*{0.05\paperheight}%
+  % Heading block
+  \begingroup
+  \par\nointerlineskip
+  \noindent\rule{\linewidth}{0.05pt}\par
+  {\hfill\Large\bfseries\sffamily \contentsname\par}%
+  \noindent\rule{\linewidth}{0.05pt}\par
+  \vspace{\baselineskip}%
+  \endgroup
+  % Add space below
+  \vspace*{0.05\paperheight}%
+  % The actual TOC
+  \@starttoc{toc}%
+}
+\makeatother
+
+% Link styling
+\hypersetup{
+  colorlinks=true,
+  linkcolor=darkblue,
+  urlcolor=darkblue,
+  citecolor=darkblue,
+  filecolor=darkblue,
+  pdfborder={0 0 0}
+}
 
 % Line spacing default
 \setstretch{1.2}
@@ -50,3 +96,33 @@
 
 % Graphics path (safe even if folder absent)
 \graphicspath{{./Images/}}
+
+% Title page layout
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \thispagestyle{empty}%
+    \vspace*{\fill}%
+    \begin{center}
+      {\LARGE\bfseries\@title\par}%
+      \vspace{0.75\baselineskip}%
+      {\large\@author\par}%
+      {\large\@date\par}%
+      \ifx\@empty\@thanks\else
+        {\footnotesize\@thanks\par}%
+      \fi
+    \end{center}
+    \vspace*{\fill}%
+    \ifx\@empty\@thanks\else
+      \begingroup
+      \footnotesize\@thanks
+      \endgroup
+    \fi
+  \end{titlepage}
+  \setcounter{footnote}{0}%
+  \global\let\@title\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@thanks\@empty
+}
+\makeatother

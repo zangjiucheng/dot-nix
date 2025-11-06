@@ -2,6 +2,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{notestyle-sections}[2025/09/03 v1.0 Section numbering]
 
-\renewcommand*{\thesection}{\Roman{section}.}
-\renewcommand*{\thesubsection}{\roman{subsection}.}
-\renewcommand*{\thesubsubsection}{\arabic{subsubsection}.}
+\renewcommand*{\thesection}{\arabic{section}}
+\renewcommand*{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand*{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
