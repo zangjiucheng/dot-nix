@@ -4,9 +4,11 @@
 
 % Options:
 %   nolayout — do not apply notestyle-layout
+%   coreonly — pass through to notestyle-boxes to keep only core theorem boxes
 \newif\ifns@layout
 \ns@layouttrue
 \DeclareOption{nolayout}{\ns@layoutfalse}
+\DeclareOption{coreonly}{\PassOptionsToPackage{coreonly}{notestyle-boxes}}
 \ProcessOptions\relax
 
 \ifns@layout\RequirePackage{notestyle-layout}\fi

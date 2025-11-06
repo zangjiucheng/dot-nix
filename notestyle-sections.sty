@@ -1,7 +1,43 @@
-% notestyle-sections.sty — numbering styles
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{notestyle-sections}[2025/09/03 v1.0 Section numbering]
+\ProvidesPackage{notestyle-sections}[2025/11/06 v1.2 Section-as-chapter headings]
 
-\renewcommand*{\thesection}{\arabic{section}}
+\RequirePackage{titlesec}
+\RequirePackage{xcolor}
+
+% numbering
+\renewcommand*{\thesection}{{\arabic{section}}}
 \renewcommand*{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand*{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% knobs
+\newcommand*\nsChapterLabel{CHAPTER}
+\newcommand*\nsRuleThickness{0.5pt}
+\newcommand*\nsChapterFont{\sffamily\LARGE}
+\newcommand*\nsTitleFont{\sffamily\bfseries\LARGE}
+
+% safe horizontal rule (no \titlerule)
+\newcommand*\nsHrule{%
+    \par\noindent\rule{\linewidth}{\nsRuleThickness}\par%
+}
+
+% main style
+\titleformat{\section}[display]
+{\nsChapterFont}%
+{   
+    \clearpage
+    \thispagestyle{empty}%
+    \vspace*{2ex}%
+    \hfill\nsChapterLabel~\thesection}%
+{1ex}%
+{%
+    \vspace{1ex}%
+    \nsHrule%
+    \raggedleft\nsTitleFont%
+}%
+[\nsHrule]%
+
+\titlespacing*{\section}{0pt}{*6}{*4}
+
+% lower levels (optional)
+% \titleformat{\subsection}{\sffamily\bfseries\large}{\thesubsection}{0.6em}{}%
+% \titleformat{\subsubsection}{\sffamily\bfseries}{\thesubsubsection}{0.6em}{}%

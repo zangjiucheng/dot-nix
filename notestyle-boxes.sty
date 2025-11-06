@@ -4,6 +4,11 @@
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{xcolor}
 
+\newif\ifns@coreonly
+\DeclareOption{coreonly}{\ns@coreonlytrue}
+\DeclareOption*{\PackageWarning{notestyle-boxes}{Unknown option `\CurrentOption' ignored}}
+\ProcessOptions\relax
+
 % --- Accent palettes (dark + light background) ---
 \definecolor{thmline}{RGB}{25,70,145}    % dark blue
 \definecolor{thmback}{RGB}{230,240,255}  % pale blue
@@ -65,36 +70,73 @@
   },
 }
 
-% --- Main environments ---
-\newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
-\newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
-\newtcolorbox{egbox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Example}}
-\newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
-\newtcolorbox{pfbox}{nsbase, colback=pfback, borderline west={3.5pt}{0pt}{pfnline}, title={Proof}}
-\newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
-\newtcolorbox{notebox}{nsbase, colback=noteback, borderline west={3.5pt}{0pt}{noteline}, title={Note}}
-\newtcolorbox{corbox}[1]{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Corollary~#1}}
-\newtcolorbox{recbox}{nsbase, colback=recback, borderline west={3.5pt}{0pt}{recline}, title={Recall}}
-\newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
-\newtcolorbox{formulabox}{nsbase, colback=formback, borderline west={3.5pt}{0pt}{formline}, title={Formula}}
-\newtcolorbox{tipbox}{nsbase, colback=tipback, borderline west={3.5pt}{0pt}{tipline}, title={Tip}}
-\newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
-\newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
-\newtcolorbox{exercisebox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Exercise}}
+\ifns@coreonly
+  % Core-only boxes (rendered)
+  \newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
+  \newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
+  \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
+  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
+  \newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
+  \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
+  \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
 
-% --- Shortcuts ---
-\newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
-\newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
-\newcommand{\eg}[1]{\begin{egbox}#1\end{egbox}}
-\newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
-\newcommand{\pf}[1]{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
-\newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
-\newcommand{\note}[1]{\begin{notebox}#1\end{notebox}}
-\newcommand{\cor}[2]{\begin{corbox}{#1}#2\end{corbox}}
-\newcommand{\recall}[1]{\begin{recbox}#1\end{recbox}}
-\newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
-\newcommand{\formula}[1]{\begin{formulabox}#1\end{formulabox}}
-\newcommand{\tip}[1]{\begin{tipbox}#1\end{tipbox}}
-\newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
-\newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
-\newcommand{\exercise}[1]{\begin{exercisebox}#1\end{exercisebox}}
+  \newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
+  \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
+  \newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
+  \newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
+  \newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
+  \newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
+  \newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
+
+  % Ignored boxes (no output)
+  \newenvironment{egbox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{pfbox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{notebox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{corbox}[1]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{recbox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{formulabox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{tipbox}[1][]{\ignorespaces}{\ignorespacesafterend}
+  \newenvironment{exercisebox}[1][]{\ignorespaces}{\ignorespacesafterend}
+
+  \newcommand{\eg}[1]{}
+  \newcommand{\pf}[1]{}
+  \newcommand{\note}[1]{}
+  \newcommand{\cor}[2]{}
+  \newcommand{\recall}[1]{}
+  \newcommand{\formula}[1]{}
+  \newcommand{\tip}[1]{}
+  \newcommand{\exercise}[1]{}
+\else
+  % Full palette boxes
+  \newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
+  \newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
+  \newtcolorbox{egbox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Example}}
+  \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
+  \newtcolorbox{pfbox}{nsbase, colback=pfback, borderline west={3.5pt}{0pt}{pfnline}, title={Proof}}
+  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
+  \newtcolorbox{notebox}{nsbase, colback=noteback, borderline west={3.5pt}{0pt}{noteline}, title={Note}}
+  \newtcolorbox{corbox}[1]{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Corollary~#1}}
+  \newtcolorbox{recbox}{nsbase, colback=recback, borderline west={3.5pt}{0pt}{recline}, title={Recall}}
+  \newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
+  \newtcolorbox{formulabox}{nsbase, colback=formback, borderline west={3.5pt}{0pt}{formline}, title={Formula}}
+  \newtcolorbox{tipbox}{nsbase, colback=tipback, borderline west={3.5pt}{0pt}{tipline}, title={Tip}}
+  \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
+  \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
+  \newtcolorbox{exercisebox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Exercise}}
+
+  \newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
+  \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
+  \newcommand{\eg}[1]{\begin{egbox}#1\end{egbox}}
+  \newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
+  \newcommand{\pf}[1]{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
+  \newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
+  \newcommand{\note}[1]{\begin{notebox}#1\end{notebox}}
+  \newcommand{\cor}[2]{\begin{corbox}{#1}#2\end{corbox}}
+  \newcommand{\recall}[1]{\begin{recbox}#1\end{recbox}}
+  \newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
+  \newcommand{\formula}[1]{\begin{formulabox}#1\end{formulabox}}
+  \newcommand{\tip}[1]{\begin{tipbox}#1\end{tipbox}}
+  \newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
+  \newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
+  \newcommand{\exercise}[1]{\begin{exercisebox}#1\end{exercisebox}}
+\fi
