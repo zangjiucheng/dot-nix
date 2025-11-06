@@ -126,3 +126,19 @@
   \global\let\@thanks\@empty
 }
 \makeatother
+
+% --- Suppress \maketitle inside included subfiles ---
+% Requires: \usepackage{subfiles} in the main document *before* loading this .sty
+\makeatletter
+\@ifpackageloaded{subfiles}{%
+  \@ifundefined{subfile}{}{%
+    \let\ns@orig@subfile\subfile
+    \renewcommand{\subfile}[1]{%
+      \begingroup
+      \let\maketitle\relax
+      \ns@orig@subfile{#1}%
+      \endgroup
+    }%
+  }%
+}{}
+\makeatother
