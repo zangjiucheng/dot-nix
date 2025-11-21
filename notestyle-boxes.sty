@@ -70,6 +70,29 @@
   },
 }
 
+% --- Section-aware numbering helpers ---
+\newcommand{\ns@sectionnumber}[1]{%
+  \ifnum\value{section}=0
+    \arabic{#1}%
+  \else
+    \thesection.\arabic{#1}%
+  \fi
+}
+\newcommand{\ns@appendtitle}[1]{%
+  \if\relax\detokenize{#1}\relax
+    %
+  \else
+    \space #1%
+  \fi
+}
+
+\newcounter{nsthm}[section]
+\renewcommand{\thensthm}{\ns@sectionnumber{nsthm}}
+\newcounter{nslemma}[section]
+\renewcommand{\thenslemma}{\ns@sectionnumber{nslemma}}
+\newcounter{nsdefn}[section]
+\renewcommand{\thensdefn}{\ns@sectionnumber{nsdefn}}
+
 \ifns@coreonly
   % Core-only boxes (rendered)
   \newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
@@ -80,10 +103,16 @@
   \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
 
-  \newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
+  \newcommand{\thm}[2]{%
+    \refstepcounter{nsthm}%
+    \begin{thmbox}{\thensthm\ns@appendtitle{#1}}#2\end{thmbox}}
   \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
-  \newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
-  \newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
+  \newcommand{\lema}[2]{%
+    \refstepcounter{nslemma}%
+    \begin{lemabox}{\thenslemma\ns@appendtitle{#1}}#2\end{lemabox}}
+  \newcommand{\defn}[2][]{%
+    \refstepcounter{nsdefn}%
+    \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
   \newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
   \newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
   \newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
@@ -124,12 +153,18 @@
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
   \newtcolorbox{exercisebox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Exercise}}
 
-  \newcommand{\thm}[2]{\begin{thmbox}{#1}#2\end{thmbox}}
+  \newcommand{\thm}[2]{%
+    \refstepcounter{nsthm}%
+    \begin{thmbox}{\thensthm\ns@appendtitle{#1}}#2\end{thmbox}}
   \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
   \newcommand{\eg}[1]{\begin{egbox}#1\end{egbox}}
-  \newcommand{\lema}[2]{\begin{lemabox}{#1}#2\end{lemabox}}
+  \newcommand{\lema}[2]{%
+    \refstepcounter{nslemma}%
+    \begin{lemabox}{\thenslemma\ns@appendtitle{#1}}#2\end{lemabox}}
   \newcommand{\pf}[1]{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
-  \newcommand{\defn}[1]{\begin{defbox}#1\end{defbox}}
+  \newcommand{\defn}[2][]{%
+    \refstepcounter{nsdefn}%
+    \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
   \newcommand{\note}[1]{\begin{notebox}#1\end{notebox}}
   \newcommand{\cor}[2]{\begin{corbox}{#1}#2\end{corbox}}
   \newcommand{\recall}[1]{\begin{recbox}#1\end{recbox}}
