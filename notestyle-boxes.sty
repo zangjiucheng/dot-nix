@@ -3,6 +3,7 @@
 \ProvidesPackage{notestyle-boxes}[2025/09/03 v4.0 Accent-colour-matched boxes]
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{xcolor}
+\RequirePackage{xparse}
 
 \newif\ifns@coreonly
 \DeclareOption{coreonly}{\ns@coreonlytrue}
@@ -61,6 +62,7 @@
     left=1.25ex, right=1.25ex, top=0.8ex, bottom=0.8ex,
     sharp corners, arc=0.6mm,
     before skip=8pt, after skip=10pt,
+    before upper=\setlength{\parskip}{\baselineskip},
     fonttitle=\bfseries,
     coltitle=black,
     colback=white,
@@ -103,19 +105,19 @@
   \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
 
-  \newcommand{\thm}[2]{%
+  \NewDocumentCommand{\thm}{m +m}{%
     \refstepcounter{nsthm}%
     \begin{thmbox}{\thensthm\ns@appendtitle{#1}}#2\end{thmbox}}
-  \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
-  \newcommand{\lema}[2]{%
+  \NewDocumentCommand{\prop}{+m}{\begin{propbox}#1\end{propbox}}
+  \NewDocumentCommand{\lema}{m +m}{%
     \refstepcounter{nslemma}%
     \begin{lemabox}{\thenslemma\ns@appendtitle{#1}}#2\end{lemabox}}
-  \newcommand{\defn}[2][]{%
+  \NewDocumentCommand{\defn}{O{} +m}{%
     \refstepcounter{nsdefn}%
     \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
-  \newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
-  \newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
-  \newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
+  \NewDocumentCommand{\remark}{+m}{\begin{rembox}#1\end{rembox}}
+  \NewDocumentCommand{\warn}{+m}{\begin{warnbox}#1\end{warnbox}}
+  \NewDocumentCommand{\trick}{+m}{\begin{trickbox}#1\end{trickbox}}
 
   % Ignored boxes (no output)
   \newenvironment{egbox}[1][]{\ignorespaces}{\ignorespacesafterend}
@@ -127,14 +129,14 @@
   \newenvironment{tipbox}[1][]{\ignorespaces}{\ignorespacesafterend}
   \newenvironment{exercisebox}[1][]{\ignorespaces}{\ignorespacesafterend}
 
-  \newcommand{\eg}[1]{}
-  \newcommand{\pf}[1]{}
-  \newcommand{\note}[1]{}
-  \newcommand{\cor}[2]{}
-  \newcommand{\recall}[1]{}
-  \newcommand{\formula}[1]{}
-  \newcommand{\tip}[1]{}
-  \newcommand{\exercise}[1]{}
+  \NewDocumentCommand{\eg}{+m}{}
+  \NewDocumentCommand{\pf}{+m}{}
+  \NewDocumentCommand{\note}{+m}{}
+  \NewDocumentCommand{\cor}{m +m}{}
+  \NewDocumentCommand{\recall}{+m}{}
+  \NewDocumentCommand{\formula}{+m}{}
+  \NewDocumentCommand{\tip}{+m}{}
+  \NewDocumentCommand{\exercise}{+m}{}
 \else
   % Full palette boxes
   \newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
@@ -153,25 +155,25 @@
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
   \newtcolorbox{exercisebox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Exercise}}
 
-  \newcommand{\thm}[2]{%
+  \NewDocumentCommand{\thm}{m +m}{%
     \refstepcounter{nsthm}%
     \begin{thmbox}{\thensthm\ns@appendtitle{#1}}#2\end{thmbox}}
-  \newcommand{\prop}[1]{\begin{propbox}#1\end{propbox}}
-  \newcommand{\eg}[1]{\begin{egbox}#1\end{egbox}}
-  \newcommand{\lema}[2]{%
+  \NewDocumentCommand{\prop}{+m}{\begin{propbox}#1\end{propbox}}
+  \NewDocumentCommand{\eg}{+m}{\begin{egbox}#1\end{egbox}}
+  \NewDocumentCommand{\lema}{m +m}{%
     \refstepcounter{nslemma}%
     \begin{lemabox}{\thenslemma\ns@appendtitle{#1}}#2\end{lemabox}}
-  \newcommand{\pf}[1]{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
-  \newcommand{\defn}[2][]{%
+  \NewDocumentCommand{\pf}{+m}{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
+  \NewDocumentCommand{\defn}{O{} +m}{%
     \refstepcounter{nsdefn}%
     \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
-  \newcommand{\note}[1]{\begin{notebox}#1\end{notebox}}
-  \newcommand{\cor}[2]{\begin{corbox}{#1}#2\end{corbox}}
-  \newcommand{\recall}[1]{\begin{recbox}#1\end{recbox}}
-  \newcommand{\remark}[1]{\begin{rembox}#1\end{rembox}}
-  \newcommand{\formula}[1]{\begin{formulabox}#1\end{formulabox}}
-  \newcommand{\tip}[1]{\begin{tipbox}#1\end{tipbox}}
-  \newcommand{\warn}[1]{\begin{warnbox}#1\end{warnbox}}
-  \newcommand{\trick}[1]{\begin{trickbox}#1\end{trickbox}}
-  \newcommand{\exercise}[1]{\begin{exercisebox}#1\end{exercisebox}}
+  \NewDocumentCommand{\note}{+m}{\begin{notebox}#1\end{notebox}}
+  \NewDocumentCommand{\cor}{m +m}{\begin{corbox}{#1}#2\end{corbox}}
+  \NewDocumentCommand{\recall}{+m}{\begin{recbox}#1\end{recbox}}
+  \NewDocumentCommand{\remark}{+m}{\begin{rembox}#1\end{rembox}}
+  \NewDocumentCommand{\formula}{+m}{\begin{formulabox}#1\end{formulabox}}
+  \NewDocumentCommand{\tip}{+m}{\begin{tipbox}#1\end{tipbox}}
+  \NewDocumentCommand{\warn}{+m}{\begin{warnbox}#1\end{warnbox}}
+  \NewDocumentCommand{\trick}{+m}{\begin{trickbox}#1\end{trickbox}}
+  \NewDocumentCommand{\exercise}{+m}{\begin{exercisebox}#1\end{exercisebox}}
 \fi
