@@ -25,6 +25,7 @@
 \RequirePackage{setspace}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{xparse}
 
 % Geometry (optional; disable with [nogeometry])
 \ifas@geom
@@ -33,6 +34,8 @@
 
 % Line spacing
 \setstretch{1.2}
+% Paragraph separation helper
+\newcommand{\ParagraphBreak}{\par\vspace{\baselineskip}}
 
 % --------------------
 % Sets
@@ -147,10 +150,10 @@
 % --------------------
 \newcommand{\conclusion}{\vspace{1em}\noindent\textbf{Conclusion:}\ }
 \newcommand{\prop}{\vspace{1em}\noindent\textbf{Proposition:}\ }
-\newcommand{\pf}[1]{\noindent\textbf{Proof:}\ #1 \hfill$\qed$}
-\newcommand{\note}[1]{\vspace{1em}\noindent\textbf{Note:}\ #1}
-\newcommand{\lema}[1]{\vspace{1em}\noindent\textbf{Lemma:}\ #1}
-\newcommand{\refe}[1]{\vspace{1em}
+\NewDocumentCommand{\pf}{+m}{\noindent\textbf{Proof:}\ #1 \hfill$\qed$}
+\NewDocumentCommand{\note}{+m}{\vspace{1em}\noindent\textbf{Note:}\ #1}
+\NewDocumentCommand{\lema}{+m}{\vspace{1em}\noindent\textbf{Lemma:}\ #1}
+\NewDocumentCommand{\refe}{+m}{\vspace{1em}
     \begin{tcolorbox}[
             colback=gray!10,
             colframe=gray!50,
