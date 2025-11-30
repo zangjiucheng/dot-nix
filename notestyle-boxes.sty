@@ -56,20 +56,20 @@
 % --- Base style ---
 \tcbset{
   nsbase/.style={
-    enhanced, breakable,
-    frame hidden,
-    boxsep=1ex,
-    left=1.25ex, right=1.25ex, top=0.8ex, bottom=0.8ex,
-    sharp corners, arc=0.6mm,
-    before skip=8pt, after skip=10pt,
-    before upper=\setlength{\parskip}{\baselineskip},
-    fonttitle=\bfseries,
-    coltitle=black,
-    colback=white,
-    colbacktitle=white,
-    opacityback=0,
-    opacitybacktitle=0,
-  },
+      enhanced, breakable,
+      frame hidden,
+      boxsep=1ex,
+      left=1.25ex, right=1.25ex, top=0.8ex, bottom=0.8ex,
+      sharp corners, arc=0.6mm,
+      before skip=8pt, after skip=10pt,
+      before upper=\setlength{\parskip}{\baselineskip},
+      fonttitle=\bfseries,
+      coltitle=black,
+      colback=white,
+      colbacktitle=white,
+      opacityback=0,
+      opacitybacktitle=0,
+    },
 }
 
 % --- Section-aware numbering helpers ---
@@ -100,7 +100,7 @@
   \newtcolorbox{thmbox}[1]{nsbase, colback=goldenback, borderline west={3.5pt}{0pt}{goldenline}, title={Theorem~#1}}
   \newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
   \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
-  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
+  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}}
   \newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
   \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
@@ -114,7 +114,9 @@
     \begin{lemabox}{\thenslemma\ns@appendtitle{#1}}#2\end{lemabox}}
   \NewDocumentCommand{\defn}{O{} +m}{%
     \refstepcounter{nsdefn}%
-    \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
+    \begin{defbox}
+      \textbf{Definition~\thensdefn\ns@appendtitle{#1}. }#2
+    \end{defbox}}
   \NewDocumentCommand{\remark}{+m}{\begin{rembox}#1\end{rembox}}
   \NewDocumentCommand{\warn}{+m}{\begin{warnbox}#1\end{warnbox}}
   \NewDocumentCommand{\trick}{+m}{\begin{trickbox}#1\end{trickbox}}
@@ -144,7 +146,7 @@
   \newtcolorbox{egbox}{nsbase, colback=egback, borderline west={3.5pt}{0pt}{egline}, title={Example}}
   \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
   \newtcolorbox{pfbox}{nsbase, colback=pfback, borderline west={3.5pt}{0pt}{pfnline}, title={Proof}}
-  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}, title={Definition}}
+  \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}}
   \newtcolorbox{notebox}{nsbase, colback=noteback, borderline west={3.5pt}{0pt}{noteline}, title={Note}}
   \newtcolorbox{corbox}[1]{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Corollary~#1}}
   \newtcolorbox{recbox}{nsbase, colback=recback, borderline west={3.5pt}{0pt}{recline}, title={Recall}}
@@ -166,7 +168,9 @@
   \NewDocumentCommand{\pf}{+m}{\begin{pfbox}#1\par\medskip\hfill$\qed$\end{pfbox}}
   \NewDocumentCommand{\defn}{O{} +m}{%
     \refstepcounter{nsdefn}%
-    \begin{defbox}[title={Definition~\thensdefn\ns@appendtitle{#1}}]#2\end{defbox}}
+    \begin{defbox}
+      \textbf{Definition~\thensdefn\ns@appendtitle{#1}. }#2
+    \end{defbox}}
   \NewDocumentCommand{\note}{+m}{\begin{notebox}#1\end{notebox}}
   \NewDocumentCommand{\cor}{m +m}{\begin{corbox}{#1}#2\end{corbox}}
   \NewDocumentCommand{\recall}{+m}{\begin{recbox}#1\end{recbox}}
