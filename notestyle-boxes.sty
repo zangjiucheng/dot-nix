@@ -94,6 +94,8 @@
 \renewcommand{\thenslemma}{\ns@sectionnumber{nslemma}}
 \newcounter{nsdefn}[section]
 \renewcommand{\thensdefn}{\ns@sectionnumber{nsdefn}}
+\newcounter{nsremark}[section]
+\renewcommand{\thensremark}{\ns@sectionnumber{nsremark}}
 
 \ifns@coreonly
   % Core-only boxes (rendered)
@@ -101,7 +103,7 @@
   \newtcolorbox{propbox}{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Proposition}}
   \newtcolorbox{lemabox}[1]{nsbase, colback=lemaback, borderline west={3.5pt}{0pt}{lemaline}, title={Lemma~#1}}
   \newtcolorbox{defbox}{nsbase, colback=defback, borderline west={3.5pt}{0pt}{defline}}
-  \newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
+  \newtcolorbox{rembox}[1]{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark~#1}}
   \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
   \newtcolorbox{trickbox}{nsbase, colback=trickback, borderline west={3.5pt}{0pt}{trickline}, title={Trick}}
 
@@ -117,7 +119,9 @@
     \begin{defbox}
       \textbf{Definition~\thensdefn\ns@appendtitle{#1}. }#2
     \end{defbox}}
-  \NewDocumentCommand{\remark}{+m}{\begin{rembox}#1\end{rembox}}
+  \NewDocumentCommand{\remark}{+m}{%
+    \refstepcounter{nsremark}%
+    \begin{rembox}{\thensremark}#1\end{rembox}}
   \NewDocumentCommand{\warn}{+m}{\begin{warnbox}#1\end{warnbox}}
   \NewDocumentCommand{\trick}{+m}{\begin{trickbox}#1\end{trickbox}}
 
@@ -150,7 +154,7 @@
   \newtcolorbox{notebox}{nsbase, colback=noteback, borderline west={3.5pt}{0pt}{noteline}, title={Note}}
   \newtcolorbox{corbox}[1]{nsbase, colback=propback, borderline west={3.5pt}{0pt}{propline}, title={Corollary~#1}}
   \newtcolorbox{recbox}{nsbase, colback=recback, borderline west={3.5pt}{0pt}{recline}, title={Recall}}
-  \newtcolorbox{rembox}{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark}}
+  \newtcolorbox{rembox}[1]{nsbase, colback=remback, borderline west={3.5pt}{0pt}{remln}, title={Remark~#1}}
   \newtcolorbox{formulabox}{nsbase, colback=formback, borderline west={3.5pt}{0pt}{formline}, title={Formula}}
   \newtcolorbox{tipbox}{nsbase, colback=tipback, borderline west={3.5pt}{0pt}{tipline}, title={Tip}}
   \newtcolorbox{warnbox}{nsbase, colback=warnback, borderline west={3.5pt}{0pt}{warnline}, title={Warning}}
@@ -174,7 +178,9 @@
   \NewDocumentCommand{\note}{+m}{\begin{notebox}#1\end{notebox}}
   \NewDocumentCommand{\cor}{m +m}{\begin{corbox}{#1}#2\end{corbox}}
   \NewDocumentCommand{\recall}{+m}{\begin{recbox}#1\end{recbox}}
-  \NewDocumentCommand{\remark}{+m}{\begin{rembox}#1\end{rembox}}
+  \NewDocumentCommand{\remark}{+m}{%
+    \refstepcounter{nsremark}%
+    \begin{rembox}{\thensremark}#1\end{rembox}}
   \NewDocumentCommand{\formula}{+m}{\begin{formulabox}#1\end{formulabox}}
   \NewDocumentCommand{\tip}{+m}{\begin{tipbox}#1\end{tipbox}}
   \NewDocumentCommand{\warn}{+m}{\begin{warnbox}#1\end{warnbox}}
